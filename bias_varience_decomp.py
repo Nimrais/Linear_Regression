@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 def _draw_bootstrap_sample(rng, X, y, frac = 1.0):
     """
@@ -36,6 +37,15 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
 
     mean_predictions = np.mean(all_pred, axis=0)
 
-    avg_bias = np.sum((mean_predictions - y_test)**2) / y_test.size
+    avg_bias = np.mean((mean_predictions - y_test)**2)
     avg_var = np.sum((mean_predictions - all_pred)**2) / all_pred.size
     return avg_expected_loss, avg_bias, avg_var
+
+def bias_variance_plot(alphas, metrics, figsize):
+    
+    complexity = np.log(alphas)
+    df = pd.DataFrame(metrics, columns=['mse', 'bias', 'varience'])
+    df['complexity'] = complexity
+    df = df.set_index('complexity')
+
+    df.plot(figsize=figsize)
