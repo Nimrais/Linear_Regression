@@ -34,9 +34,8 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
         axis=1,
         arr=all_pred).mean()
 
-    main_predictions = np.mean(all_pred, axis=0)
+    mean_predictions = np.mean(all_pred, axis=0)
 
-    avg_bias = np.sum((main_predictions - y_test)**2) / y_test.size
-    avg_var = np.sum((main_predictions - all_pred)**2) / all_pred.size
-
-    return avg_expected_loss, avg_bias, avg_var, all_pred
+    avg_bias = np.sum((mean_predictions - y_test)**2) / y_test.size
+    avg_var = np.sum((mean_predictions - all_pred)**2) / all_pred.size
+    return avg_expected_loss, avg_bias, avg_var
